@@ -22,7 +22,7 @@ class UserManager(BaseUserManager):
         user.save(using=self._db)
         return user
 
-    def create_superuser(self, email, organization, password):
+    def create_superuser(self, email, password):
 
         user = self.create_user(
             email=self.normalize_email(email),
@@ -35,6 +35,10 @@ class UserManager(BaseUserManager):
 
 
 class User(AbstractBaseUser, PermissionsMixin):
+
+    class Meta:
+        db_table = 'users'
+
     objects = UserManager()
 
     email = models.EmailField(
@@ -43,6 +47,7 @@ class User(AbstractBaseUser, PermissionsMixin):
     )
     is_active = models.BooleanField(default=True)
     is_admin = models.BooleanField(default=False)
+    date_joined = models.DateTimeField(auto_now_add=True)
 
     USERNAME_FIELD = 'email'
 

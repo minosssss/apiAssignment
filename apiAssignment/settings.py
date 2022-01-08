@@ -13,6 +13,8 @@ from datetime import timedelta
 from pathlib import Path
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
+from apiAssignment import db_settings
+
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 
@@ -37,17 +39,14 @@ DJANGO_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-]
-
-PROJECT_APPS = [
-    "users.apps.UsersConfig",
+    'users',
 ]
 
 THIRD_PARTY_APPS = [
     "rest_framework",
 ]
 
-INSTALLED_APPS = DJANGO_APPS + PROJECT_APPS + THIRD_PARTY_APPS
+INSTALLED_APPS = DJANGO_APPS + THIRD_PARTY_APPS
 
 REST_FRAMEWORK = {
     'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.PageNumberPagination',
@@ -90,12 +89,7 @@ WSGI_APPLICATION = 'apiAssignment.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/4.0/ref/settings/#databases
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
-    }
-}
+DATABASES = db_settings.DATABASES
 
 
 # Password validation

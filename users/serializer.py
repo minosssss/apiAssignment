@@ -8,6 +8,12 @@ class UserSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = User
+        fields = (
+            "email",
+            "password",
+            "date_joined",
+        )
+        read_only_fields = ("id",)
 
     def create(self, validated_data):
         password = validated_data.get("password")
