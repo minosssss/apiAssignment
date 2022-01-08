@@ -5,6 +5,7 @@ from rest_framework import authentication, exceptions
 from users.models import User
 
 
+#header에서 token을 이용하기 위한 인증
 class JWTAuthentication(authentication.BaseAuthentication):
     def authenticate(self, request):
         try:

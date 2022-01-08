@@ -5,6 +5,7 @@ from django.shortcuts import render
 from rest_framework import status
 from rest_framework.decorators import api_view, permission_classes
 from rest_framework.permissions import IsAuthenticated
+from rest_framework.renderers import TemplateHTMLRenderer, StaticHTMLRenderer
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
@@ -29,6 +30,10 @@ class LoginView(APIView):
         if not email or not password:
             return Response(status=status.HTTP_400_BAD_REQUEST, data={"message": "Key Error"})
         user = authenticate(email=email, password=password)
+        #장고의 authenticate function을 활용하여, email과 password가 일치하면 user 반환
+        #정보가 하나라도 없다면, key error 메시지 전송
+
+        #정보가 일치하다면 token 발행
         if user is not None:
             encode_jwt = jwt.encode(
                 {"pk": user.pk}, settings.SECRET_KEY, algorithm="HS256"
