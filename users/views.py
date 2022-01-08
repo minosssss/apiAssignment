@@ -3,7 +3,7 @@ from django.shortcuts import render
 
 # Create your views here.
 from rest_framework import status
-from rest_framework.decorators import api_view
+from rest_framework.decorators import api_view, permission_classes
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 from rest_framework.views import APIView
@@ -13,7 +13,7 @@ from users.models import User
 from users.serializer import UserSerializer
 import jwt
 
-class UsersView(APIView):
+class SignUpView(APIView):
     def post(self, request):
         serializer = UserSerializer(data=request.data)
         if serializer.is_valid():
@@ -21,6 +21,21 @@ class UsersView(APIView):
             return Response(UserSerializer(new_user).data)
         else:
             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+class LoginView(APIView):
+    def post(self, request):
+        email = request.data.get("email")
+        password = request.data.get("password")
+        if not email or not password:
+            return Response(status=status.HTTP_400_BAD_REQUEST, data={"message": "Key Error"})
+        user = authenticate(email=email, password=password)
+        if user is not None:
+            encode_jwt = jwt.encode(
+                {"pk": user.pk}, settings.SECRET_KEY, algorithm="HS256"
+            )
+            return Response(data={"token": encode_jwt})
+        else:
+            return Response(status=status.HTTP_401_UNAUTHORIZED)
 
 
 class MeView(APIView):
@@ -38,27 +53,15 @@ class MeView(APIView):
         else:
             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
+class DetailView(APIView):
+    permission_classes = [IsAuthenticated]
+    def get(self, request, pk):
+        if request.user.is_admin:
+            try:
+                user = User.objects.get(pk=pk)
+                return Response(UserSerializer(user).data)
+            except:
+                return Response(status=status.HTTP_404_NOT_FOUND)
+        else:
+            return Response(status=status.HTTP_401_UNAUTHORIZED, data={"message": "Only admin can do this "})
 
-@api_view(["GET"])
-def user_detail(request, pk):
-    try:
-        user = User.objects.get(pk=pk)
-        return Response(UserSerializer(user).data)
-    except:
-        return Response(status=status.HTTP_404_NOT_FOUND)
-
-
-@api_view(["POST"])
-def login(request):
-    email = request.data.get("email")
-    password = request.data.get("password")
-    if not email or not password:
-        return Response(status=status.HTTP_400_BAD_REQUEST)
-    user = authenticate(username=email, password=password)
-    if user is not None:
-        encode_jwt = jwt.encode(
-            {"id": user.pk}, settings.SECRET_KEY, algorithm="HS256"
-        )
-        return Response(data={"token":encode_jwt})
-    else:
-        return Response(status=status.HTTP_401_UNAUTHORIZED)

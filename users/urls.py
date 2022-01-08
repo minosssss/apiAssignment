@@ -6,9 +6,9 @@ from users.views import *
 app_name = "users"
 
 urlpatterns = [
-    path("", views.UsersView.as_view()),
-    path("me/", views.MeView.as_view()),
-    path("token/", views.login),
-    path("<int:pk>/", views.user_detail),
+    path("", views.SignUpView.as_view()), #sign-up
+    path("me/", views.MeView.as_view()), #only my-info
+    path("login/", views.LoginView.as_view()), #login
+    path("<int:pk>/", views.DetailView.as_view()), #user-profile (only admin)
 
 ]
