@@ -9,8 +9,6 @@ class Account(models.Model): # 지불방식
     """ Custom User Model """
     
     group = models.CharField(choices=ACCOUNT_CHOICES)
-    name = models.CharField(max_length=20)
-    user = models.ForeignKey(User, related_name='account', on_delete=models.CASCADE)
 
     class Meta:
         db_table = 'account'

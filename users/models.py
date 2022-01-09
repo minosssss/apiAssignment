@@ -48,8 +48,7 @@ class User(AbstractBaseUser, PermissionsMixin):
     is_active = models.BooleanField(default=True)
     is_admin = models.BooleanField(default=False)
     date_joined = models.DateTimeField(auto_now_add=True)
-    category = models.ManyToManyField("accountBook.Category", related_name="category", blank=True)
-    Payment = models.ManyToManyField("accountBook.Payment", related_name="payment", blank=True)
+    Account = models.ManyToManyField("accountBook.Account", related_name="payment", blank=True)
 
     USERNAME_FIELD = 'email'
 
