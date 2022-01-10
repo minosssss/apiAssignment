@@ -1,8 +1,8 @@
 #지불방식
-CASH = 'p001'
-BANK = 'p002'
-CREDIT = 'p003'
-DEBIT = 'p004'
+CASH = 'P001'
+BANK = 'P002'
+CREDIT = 'P003'
+DEBIT = 'P004'
 
 ACCOUNT_CHOICES = (
     (CASH, "현금"),
@@ -11,15 +11,15 @@ ACCOUNT_CHOICES = (
     (DEBIT, "체크카드"),
 )
 
-
-MEAL = 'c001'
-Transportation = 'c002'
-ENTERTAINMENT = 'c003'
-GROCERY = 'c004'
-SHOPPING = 'c005'
-HEALTH = 'c006'
-EDUCATION = 'c007'
-ETC = 'c008'
+#사용구분
+MEAL = 'C001'
+Transportation = 'C002'
+ENTERTAINMENT = 'C003'
+GROCERY = 'C004'
+SHOPPING = 'C005'
+HEALTH = 'C006'
+EDUCATION = 'C007'
+ETC = 'C008'
 
 CATEGORY_CHOICES = (
     (MEAL, "식비"),
@@ -30,4 +30,10 @@ CATEGORY_CHOICES = (
     (HEALTH, "건강"),
     (EDUCATION, "교육"),
     (ETC, "기타"),
+)
+
+CLASSIFICATION_CHOICES = (
+    ('INCM', '수입'),
+    ('EXPND', '지출'),
+    #('ACTRSF', "이체"),
 )
