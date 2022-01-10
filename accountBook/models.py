@@ -1,29 +1,10 @@
 from datetime import date
+
+from django.core.validators import MinValueValidator
 from django.db import models
 from users.models import User
 # Create your models here.
 
-
-class Account(models.Model):
-    # 자산구분
-    # CASH = 'P001'
-    # BANK = 'P002'
-    # CREDIT = 'P003'
-    # DEBIT = 'P004'
-
-    ACCOUNT_CHOICES = (
-        ('CASH', "현금"),
-        ('BANK', "은행"),
-        ('CREDIT', "신용카드"),
-        ('DEBIT', "체크카드"),
-    )
-    type = models.CharField(max_length=10, choices=ACCOUNT_CHOICES)
-
-    class Meta:
-        db_table = 'account'
-
-    def __str__(self):
-        return self.group
 
 class Category(models.Model):
     # 사용구분
@@ -55,9 +36,16 @@ class Category(models.Model):
         return self.type
 
 class Payment(models.Model):
-    # 자산세부
+    GROUP_CHOICES = (
+        ('CASH', "현금"),
+        ('BANK', "은행"),
+        ('CREDIT', "신용카드"),
+        ('DEBIT', "체크카드"),
+    )
+
+    # 자산
     name = models.CharField(max_length=20)
-    group = models.ForeignKey(Account, related_name='payment_group', on_delete=models.CASCADE)
+    group = models.CharField(max_length=10, choices=GROUP_CHOICES)
     user = models.ForeignKey(User, related_name='payment_user', on_delete=models.CASCADE)
 
     class Meta:
@@ -65,7 +53,7 @@ class Payment(models.Model):
         ordering = ['-user']
 
     def __str__(self):
-        return f'{self.name}'
+        return f'{self.group} | {self.name}'
 
 
 class Record(models.Model):
@@ -85,7 +73,7 @@ class Record(models.Model):
     category = models.ForeignKey(Category, related_name='record_category', on_delete=models.CASCADE)
     payment = models.ForeignKey(Payment, related_name='records_payment', on_delete=models.CASCADE)
 
-    amout = models.IntegerField()
+    amout = models.IntegerField(validators=[MinValueValidator(0)])
     note = models.CharField(max_length=100, blank=True)
 
     user = models.ForeignKey(User, related_name='record_user', on_delete=models.CASCADE)
@@ -97,4 +85,4 @@ class Record(models.Model):
       db_table = 'record'
 
     def __str__(self):
-        return f'{self.classification, self.date.__str__(), self.amout, self.status, self.payment}'
+        return f'{self.classification} - {self.date.__str__()} - {self.amout} - {self.status} - {self.payment}'

@@ -1,13 +1,16 @@
 
-
 from django.urls import path
+from rest_framework.routers import DefaultRouter
+from accountBook.views import RecordViewSet
 
-from accountBook import views
-from accountBook.views import *
+app_name = "assets"
 
-app_name = "users"
+router = DefaultRouter()
+router.register("", RecordViewSet)
 
-urlpatterns = [
-    path("", views.PaymentView.as_view()),
-    path("record/", views.RecordView.as_view()),
-]
+urlpatterns = router.urls
+
+# urlpatterns = [
+#     path("", views.PaymentView.as_view()),
+#     path("record/", views.RecordView.as_view()),
+# ]
