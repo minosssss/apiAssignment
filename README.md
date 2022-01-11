@@ -209,7 +209,7 @@ GET http://127.0.0.1:8000/api/v1/asset/records/search?
   amout_gte={amout} request.GET.get("amout_up", None) #보다 위
   note={note}
   status={status}
-}
+
 ```
 - 매개변수는 다음과 같습니다.
   - payment: 지불방식
