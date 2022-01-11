@@ -12,13 +12,13 @@
 ### 유저목록
 유저의 전체 리스트를 가져오는 API 입니다.
 - 오직 관리자에게만 허용됩니다.
-```json
+```
 GET http://localhost:8000/api/v1/user/
 ```
 ### 회원가입, 로그인, 로그아웃
 - `email`과 `password`로 가입을 진행합니다. 
 - 로그인 후 `token` 을 발행합니다.
-```json
+```
 @회원가입
 POST http://localhost:8000/api/v1/user/
         
@@ -36,7 +36,7 @@ GET http://localhost:8000/api/v1/user/logout/
 ```
 ### 사용자 정보 조회
 - 사용자의 아이디`{user_id}`로 사용자의 정보만 조회 가능하며, 관리자도 허용되지 않습니다.
-```json
+```
 GET http://localhost:8000/api/v1/user/{user_id}/
 
 @user_id 1번이 1번과 2번을 조회 할 경우 응답값
@@ -54,7 +54,7 @@ GET http://localhost:8000/api/v1/user/2/
 
 ### 사용자 정보 변경
 - 사용자의 이메일과 비밀번호를 변경할 수 있습니다.
-```json
+```
 PUT http://localhost:8000/api/v1/user/{user_id}/
         
 ✔요구항목
@@ -73,7 +73,7 @@ PUT http://localhost:8000/api/v1/user/{user_id}/
   
 [^1]: CASH, BANK, CREDIT, DEBIT
  
-```json
+```
 GET http://localhost:8000/api/v1/payments/
 
 ✔응답값
@@ -94,7 +94,7 @@ POST http://localhost:8000/api/v1/payments/
 ### 수정 및 삭제
 - 사용자의 자산항목을 수정,삭제 할 수 있습니다.
  
-```json
+```
 PUT http://localhost:8000/api/v1/payments/{payment_id}/
 DELETE http://localhost:8000/api/v1/payments/{payment_id}/
         
@@ -108,7 +108,7 @@ DELETE http://localhost:8000/api/v1/payments/{payment_id}/
 ## 사용내역
 ### 전체조회
 - 로그인 된 사용자의 사용내역을 조회 및 추가 할 수 있습니다.
-```json
+```
 GET http://127.0.0.1:8000/api/v1/asset/records/
 ```
 ### 응답 item
@@ -132,7 +132,7 @@ GET http://127.0.0.1:8000/api/v1/asset/records/
   - user: 요청 유저 ID
 
 ### 응답값 예
-```json
+```
 
 {
     "count": 1,
@@ -159,7 +159,7 @@ GET http://127.0.0.1:8000/api/v1/asset/records/
     ]
 }
 ```
-```json
+```
 POST http://127.0.0.1:8000/api/v1/asset/records/
 ✔요구항목
 {
@@ -183,7 +183,7 @@ POST http://127.0.0.1:8000/api/v1/asset/records/
 - 필요로하는 항목만 수정도 가능합니다.
 - `status`는 단순 제외기능이며, 물리적인 삭제는 관리자만 가능합니다.
 - `payment와 category 항목은 업데이트 예정`
-```json
+```
 PUT http://127.0.0.1:8000/api/v1/asset/records/{record_id}
 
 ✔요구항목
@@ -198,15 +198,15 @@ PUT http://127.0.0.1:8000/api/v1/asset/records/{record_id}
 
 ### 검색 기능
 - 사용 내역을 검색할 수 있는 API 입니다.
-```json
+```
 GET http://127.0.0.1:8000/api/v1/asset/records/search?
   payment={payment}
   category={category}
   classification={classification}
   date={date}
   date_from={date}&date_to={date}
-  amout_lte={amout} = request.GET.get("amout_down", None) #보다 아래
-  amout_gte={amout} request.GET.get("amout_up", None) #보다 위
+  amout_lte={amout}
+  amout_gte={amout}
   note={note}
   status={status}
 
