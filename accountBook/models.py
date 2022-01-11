@@ -8,24 +8,24 @@ from users.models import User
 
 class Category(models.Model):
     # 사용구분
-    # MEAL = 'C001'
-    # Transportation = 'C002'
-    # ENTERTAINMENT = 'C003'
-    # GROCERY = 'C004'
-    # SHOPPING = 'C005'
-    # HEALTH = 'C006'
-    # EDUCATION = 'C007'
-    # ETC = 'C008'
+    MEAL = '식비'
+    TRANSPORTATION = '교통비'
+    ENTERTAINMENT = '문화생활'
+    GROCERY = '마트/편의점'
+    SHOPPING = '쇼핑'
+    HEALTH = '건강'
+    EDUCATION = '교육'
+    ETC = '기타'
 
     CATEGORY_CHOICES = (
-        ('MEAL', "식비"),
-        ('TRANSPORTATION', "교통비"),
-        ('ENTERTAINMENT', "문화생활"),
-        ('GROCERY', "마트/편의점"),
-        ('SHOPPING', "쇼핑"),
-        ('HEALTH', "건강"),
-        ('EDUCATION', "교육"),
-        ('ETC', "기타"),
+        (MEAL, "식비"),
+        (TRANSPORTATION, "교통비"),
+        (ENTERTAINMENT, "문화생활"),
+        (GROCERY, "마트/편의점"),
+        (SHOPPING, "쇼핑"),
+        (HEALTH, "건강"),
+        (EDUCATION, "교육"),
+        (ETC, "기타"),
     )
     type = models.CharField(max_length=30, choices=CATEGORY_CHOICES)
 
@@ -83,6 +83,7 @@ class Record(models.Model):
 
     class Meta:
       db_table = 'record'
+      ordering = ('-status','-date')
 
     def __str__(self):
         return f'{self.classification} - {self.date.__str__()} - {self.amout} - {self.status} - {self.payment}'
