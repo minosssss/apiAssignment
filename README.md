@@ -4,9 +4,9 @@
 - Django Rest framework 활용
 - Vesion : 1.0.0
 - Servers:
-  - http://localhost:8000/api/v1/user/
-  - http://localhost:8000/api/asset/payment/
-  - http://localhost:8000/api/asset/records/
+  - `http://localhost:8000/api/v1/user/`
+  - `http://localhost:8000/api/asset/payments/`
+  - `http://localhost:8000/api/asset/records/`
 
 # User API
 ### 유저목록
