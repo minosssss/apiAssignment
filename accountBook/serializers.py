@@ -9,7 +9,7 @@ class PaymentSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Payment
-        fields = ('id', 'name')
+        fields = ('id', 'name','group')
         read_only_fields = ("id",)
 
     def create(self, validated_data):
@@ -32,7 +32,7 @@ class RecordSerializer(serializers.ModelSerializer):
     class Meta:
         model = Record
         fields = '__all__'
-        read_only_fields = ('user',)
+        read_only_fields = ('id', 'user',)
 
     def create(self, validated_data):
         request = self.context.get("request")

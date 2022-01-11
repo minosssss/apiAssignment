@@ -32,7 +32,7 @@ class RecordViewSet(ModelViewSet):
 
     @action(detail=False) #action = url_path
     def search(self, request):
-        print(request.GET.get)
+        user = request.user
         payment = request.GET.get("payment", None)
         category = request.GET.get("category", None)
         classification = request.GET.get("classification", None) #1 수입, 2 지출
@@ -64,7 +64,7 @@ class RecordViewSet(ModelViewSet):
             filter_kwargs["status"] = status
         paginator = self.paginator
         try:
-            records = Record.objects.filter(**filter_kwargs)
+            records = Record.objects.filter(**filter_kwargs, user_id=user.pk)
         except ValueError:
             records = Record.objects.all()
         results = paginator.paginate_queryset(records, request)
