@@ -1,4 +1,4 @@
-from django.contrib.auth import authenticate
+from django.contrib.auth import authenticate, logout
 from rest_framework import status
 from rest_framework.decorators import action
 from rest_framework.permissions import IsAuthenticated, IsAdminUser, AllowAny
@@ -44,6 +44,10 @@ class UsersViewSet(ModelViewSet):
         else:
             return Response(status=status.HTTP_401_UNAUTHORIZED)
 
-
+    @action( detail=False, methods=['get'])
+    def logout(self, request):
+        logout(request)
+        data = {'success': 'Sucessfully logged out'}
+        return Response(data=data, status=status.HTTP_200_OK)
 
 
