@@ -1,13 +1,8 @@
-FROM python:3.9.0
-
-WORKDIR /home/
-
-RUN git clone https://github.com/minosssss/apiAssignment
-
-WORKDIR /home/apiAssignment/
-
+FROM python:3.9
+ENV PYTHONUNBUFFERED=1
+RUN apt-get -y update
+RUN apt-get -y install vim
+WORKDIR /django
+COPY . /django
+COPY requirements.txt requirements.txt
 RUN pip install --upgrade pip && pip install -r requirements.txt
-
-EXPOSE 8000
-
-CMD ["python", "manage.py", "runserver", "0.0.0.0:8000"]
